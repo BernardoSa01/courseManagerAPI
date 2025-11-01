@@ -64,13 +64,20 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public Curso updateCurso(@PathVariable Long id, @RequestBody Curso curso) {
-        return cursoService.update(id, curso);
+    public ResponseEntity<CursoResponseDTO> updateCurso(@PathVariable Long id, @RequestBody CursoRequestDTO curso) {
+        Curso cursoEntity = cursoMapper.toEntity(curso);
+
+        Curso cursoAtualizado = cursoService.update(id, cursoEntity);
+
+        CursoResponseDTO response = cursoMapper.toDto(cursoAtualizado);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCurso(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCurso(@PathVariable Long id) {
         cursoService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
 
