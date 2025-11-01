@@ -1,7 +1,9 @@
 package com.example.courseManager.service;
 
 import com.example.courseManager.models.Aluno;
+import com.example.courseManager.models.Curso;
 import com.example.courseManager.repositories.AlunoRepository;
+import com.example.courseManager.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +13,15 @@ import java.util.Optional;
 @Service
 public class AlunoService {
 
-    //Instanciando a interface
+    //Injetando as interfaces
     @Autowired
     private AlunoRepository alunoRepository;
 
+    @Autowired
+    private CursoRepository cursoRepository;
 
-    public Aluno save(Aluno aluno) {
-        return alunoRepository.save(aluno);
-    }
+
+    public Aluno save(Aluno aluno) { return alunoRepository.save(aluno); }
 
 
     public Optional<Aluno> findById(Long id) {
