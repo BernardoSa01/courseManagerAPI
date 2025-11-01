@@ -4,6 +4,8 @@ import com.example.courseManager.dtos.AlunoRequestDTO;
 import com.example.courseManager.dtos.AlunoResponseDTO;
 import com.example.courseManager.mappers.AlunoMapper;
 import com.example.courseManager.models.Aluno;
+import com.example.courseManager.models.Curso;
+import com.example.courseManager.repositories.CursoRepository;
 import com.example.courseManager.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,16 +26,27 @@ public class AlunoController {
     @Autowired
     private AlunoMapper alunoMapper;
 
+    @Autowired
+    private CursoRepository cursoRepository;
+
     @PostMapping("/save")
     public ResponseEntity<AlunoResponseDTO> create(@RequestBody AlunoRequestDTO dto) {
 
+        // Busca o curso referente
+        Curso curso = cursoRepository.findById(dto.getCursoId())
+                .orElseThrow(() -> new RuntimeException("Curso não encontrado!"));
+
         // Convertendo de dto para entidade
         Aluno aluno = alunoMapper.toEntity(dto);
+
+        // Associa o aluno ao curso encontrado
+        aluno.setCurso(curso);
 
         Aluno alunoCriado = alunoService.save(aluno);
 
         // Convertendo a entidade persistida em DTO de resposta
         AlunoResponseDTO response = alunoMapper.toDto(alunoCriado);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
