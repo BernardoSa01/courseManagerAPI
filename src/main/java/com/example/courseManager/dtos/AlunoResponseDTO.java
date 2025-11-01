@@ -7,18 +7,21 @@ public class AlunoResponseDTO {
     private String email;
     private String matricula;
 
-    private CursoResponseDTO curso;
+    private Long cursoId;
+    private String cursoNome;
+
 
 
     public AlunoResponseDTO() {
     }
 
-    public AlunoResponseDTO(long id, String nome, String email, String matricula, CursoResponseDTO curso) {
+    public AlunoResponseDTO(long id, String nome, String email, String matricula, Long cursoId, String cursoNome) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.matricula = matricula;
-        this.curso = curso;
+        this.cursoId = cursoId;
+        this.cursoNome = cursoNome;
     }
 
     public long getId() {
@@ -53,12 +56,20 @@ public class AlunoResponseDTO {
         this.matricula = matricula;
     }
 
-    public CursoResponseDTO getCurso() {
-        return curso;
+    public Long getCursoId() {
+        return cursoId;
     }
 
-    public void setCurso(CursoResponseDTO curso) {
-        this.curso = curso;
+    public void setCursoId(Long cursoId) {
+        this.cursoId = cursoId;
+    }
+
+    public String getCursoNome() {
+        return cursoNome;
+    }
+
+    public void setCursoNome(String cursoNome) {
+        this.cursoNome = cursoNome;
     }
 }
 

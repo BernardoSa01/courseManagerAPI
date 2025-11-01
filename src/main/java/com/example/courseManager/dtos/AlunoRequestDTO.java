@@ -6,18 +6,18 @@ public class AlunoRequestDTO {
     private String cpf;
     private String email;
     private String matricula;
+    private Long cursoId;
 
-    private CursoRequestDTO curso;
 
     public AlunoRequestDTO() {
     }
 
-    public AlunoRequestDTO(String nome, String cpf, String email, String matricula, CursoRequestDTO curso) {
+    public AlunoRequestDTO(String nome, String cpf, String email, String matricula, Long cursoId) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.matricula = matricula;
-        this.curso = curso;
+        this.cursoId = cursoId;
     }
 
     public String getNome() {
@@ -52,12 +52,12 @@ public class AlunoRequestDTO {
         this.matricula = matricula;
     }
 
-    public CursoRequestDTO getCurso() {
-        return curso;
+    public Long getCursoId() {
+        return cursoId;
     }
 
-    public void setCurso(CursoRequestDTO curso) {
-        this.curso = curso;
+    public void setCursoId(Long cursoId) {
+        this.cursoId = cursoId;
     }
 }
 
