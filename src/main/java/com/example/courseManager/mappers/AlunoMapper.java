@@ -10,12 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AlunoMapper {
 
-    @Autowired
-    @Lazy
-    private CursoMapper cursoMapper;
-
     public Aluno toEntity(AlunoRequestDTO dto) {
-
         if (dto == null) return null;
 
         Aluno aluno = new Aluno();
@@ -23,10 +18,6 @@ public class AlunoMapper {
         aluno.setCpf(dto.getCpf());
         aluno.setEmail(dto.getEmail());
         aluno.setMatricula(dto.getMatricula());
-
-        if (dto.getCurso() != null) {
-            aluno.setCurso(cursoMapper.toEntity(dto.getCurso()));
-        }
 
         return aluno;
     }
@@ -41,7 +32,8 @@ public class AlunoMapper {
         alunoDto.setMatricula(entity.getMatricula());
 
         if (entity.getCurso() != null) {
-            alunoDto.setCurso(cursoMapper.toDto(entity.getCurso()));
+            alunoDto.setCursoId(entity.getCurso().getId());
+            alunoDto.setCursoNome(entity.getCurso().getNome());
         }
 
         return alunoDto;
