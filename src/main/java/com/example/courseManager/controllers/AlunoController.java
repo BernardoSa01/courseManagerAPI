@@ -7,6 +7,7 @@ import com.example.courseManager.models.Aluno;
 import com.example.courseManager.models.Curso;
 import com.example.courseManager.repositories.CursoRepository;
 import com.example.courseManager.service.AlunoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AlunoController {
     private CursoRepository cursoRepository;
 
     @PostMapping("/save")
-    public ResponseEntity<AlunoResponseDTO> create(@RequestBody AlunoRequestDTO dto) {
+    public ResponseEntity<AlunoResponseDTO> create(@Valid @RequestBody AlunoRequestDTO dto) {
 
         // Busca o curso referente
         Curso curso = cursoRepository.findById(dto.getCursoId())
@@ -79,7 +80,7 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlunoResponseDTO> updateAluno(@PathVariable Long id, @RequestBody AlunoRequestDTO dto) { // @PathVariable para localizar o aluno + @RequestBody para alterar o body
+    public ResponseEntity<AlunoResponseDTO> updateAluno(@PathVariable Long id, @Valid @RequestBody AlunoRequestDTO dto) { // @PathVariable para localizar o aluno + @RequestBody para alterar o body
 
         Aluno aluno = alunoMapper.toEntity(dto);
 
