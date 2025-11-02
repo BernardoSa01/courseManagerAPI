@@ -1,13 +1,26 @@
 package com.example.courseManager.dtos;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 public class CursoRequestDTO {
 
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
+
+    @NotBlank(message = "Descrição é obrigatória")
     private String descricao;
+
+    @NotNull(message = "Carga horária é obrigatória")
+    @Min(value = 80, message = "A carga horária mínima é de 80 horas")
     private Integer cargaHoraria;
 
+    @Valid
     private List<AlunoRequestDTO> alunos;
 
     public CursoRequestDTO() {

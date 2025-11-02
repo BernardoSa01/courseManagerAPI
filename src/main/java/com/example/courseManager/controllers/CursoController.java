@@ -5,6 +5,7 @@ import com.example.courseManager.dtos.CursoResponseDTO;
 import com.example.courseManager.mappers.CursoMapper;
 import com.example.courseManager.models.Curso;
 import com.example.courseManager.service.CursoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class CursoController {
     private CursoMapper cursoMapper;
 
     @PostMapping("/save")
-    public ResponseEntity<CursoResponseDTO> create(@RequestBody CursoRequestDTO dto) {
+    public ResponseEntity<CursoResponseDTO> create(@Valid @RequestBody CursoRequestDTO dto) {
 
         Curso curso = cursoMapper.toEntity(dto);
 
@@ -64,7 +65,7 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CursoResponseDTO> updateCurso(@PathVariable Long id, @RequestBody CursoRequestDTO curso) {
+    public ResponseEntity<CursoResponseDTO> updateCurso(@PathVariable Long id, @Valid @RequestBody CursoRequestDTO curso) {
         Curso cursoEntity = cursoMapper.toEntity(curso);
 
         Curso cursoAtualizado = cursoService.update(id, cursoEntity);
