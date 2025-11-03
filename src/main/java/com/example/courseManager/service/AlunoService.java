@@ -4,7 +4,7 @@ import com.example.courseManager.models.Aluno;
 import com.example.courseManager.models.Curso;
 import com.example.courseManager.repositories.AlunoRepository;
 import com.example.courseManager.repositories.CursoRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.courseManager.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
