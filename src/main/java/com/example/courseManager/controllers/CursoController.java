@@ -37,7 +37,7 @@ public class CursoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public ResponseEntity<CursoResponseDTO> findCursoById(@PathVariable Long id) {
         Optional<Curso> curso = cursoService.findById(id);
 
@@ -47,6 +47,16 @@ public class CursoController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }*/
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CursoResponseDTO> findCursoById(@PathVariable Long id) {
+
+        Curso curso = cursoService.findById(id);
+
+        CursoResponseDTO response = cursoMapper.toDto(curso);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping
@@ -65,8 +75,8 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CursoResponseDTO> updateCurso(@PathVariable Long id, @Valid @RequestBody CursoRequestDTO curso) {
-        Curso cursoEntity = cursoMapper.toEntity(curso);
+    public ResponseEntity<CursoResponseDTO> updateCurso(@PathVariable Long id, @Valid @RequestBody CursoRequestDTO dto) {
+        Curso cursoEntity = cursoMapper.toEntity(dto);
 
         Curso cursoAtualizado = cursoService.update(id, cursoEntity);
 
@@ -77,7 +87,7 @@ public class CursoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCurso(@PathVariable Long id) {
-        cursoService.deleteById(id);
+        cursoService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

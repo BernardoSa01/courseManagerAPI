@@ -2,6 +2,7 @@ package com.example.courseManager.service;
 
 import com.example.courseManager.models.Curso;
 import com.example.courseManager.repositories.CursoRepository;
+import com.example.courseManager.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,18 +21,25 @@ public class CursoService {
         return cursoRepository.save(curso);
     }
 
-    public Optional<Curso> findById(Long id) {
-        return cursoRepository.findById(id);
+    public Curso findById(Long id) {
+
+        return cursoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
     }
 
     public List<Curso> findAll() {
-        return cursoRepository.findAll();
+        List<Curso> cursos = cursoRepository.findAll();
+
+        if (cursos.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum curso encontrado no sistema");
+        }
+
+        return cursos;
     }
 
     public Curso update(Long id, Curso curso) {
         // Encontrando o curso pelo id
-        Curso cursoExistente = cursoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Curso não encontrado!"));
+        Curso cursoExistente = findById(id);
 
         // Alterando os atributos com set + get
         cursoExistente.setNome(curso.getNome());
@@ -42,11 +50,10 @@ public class CursoService {
         return cursoRepository.save(cursoExistente);
     }
 
-    public void deleteById(Long id) {
-        Curso cursoExistente = cursoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Curso não encontrado!"));
+    public void delete(Long id) {
+        Curso curso = findById(id);
 
-        cursoRepository.deleteById(id);
+        cursoRepository.delete(curso);
     }
 
 }
