@@ -4,6 +4,7 @@ import com.example.courseManager.models.Aluno;
 import com.example.courseManager.models.Curso;
 import com.example.courseManager.repositories.AlunoRepository;
 import com.example.courseManager.repositories.CursoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,38 +22,51 @@ public class AlunoService {
     private CursoRepository cursoRepository;
 
 
-    public Aluno save(Aluno aluno) { return alunoRepository.save(aluno); }
+    public Aluno save(Aluno aluno, Long cursoId) {
+        Curso curso = cursoRepository.findById(cursoId)
+                .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
+
+        aluno.setCurso(curso);
+        return alunoRepository.save(aluno);
+    }
 
 
-    public Optional<Aluno> findById(Long id) {
-        return alunoRepository.findById(id);
+    public Aluno findById(Long id) {
+        return alunoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Aluno não encontrado"));
     }
 
     public List<Aluno> findAll() {
-        return alunoRepository.findAll();
+        List<Aluno> alunos = alunoRepository.findAll();
+        if (alunos.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum aluno encontrado no sistema");
+        }
+        return alunos;
     }
 
-    public Aluno update(Long id, Aluno aluno) {
+    public Aluno update(Long id, Aluno aluno, Long cursoId) {
         // Localizando o aluno
-        Aluno alunoExistente = alunoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado!"));
+        Aluno alunoExistente = findById(id);
+
+        // Localizando o curso
+        Curso curso = cursoRepository.findById(cursoId)
+                .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
 
         // Altera os atributos do aluno com set + get
         alunoExistente.setNome(aluno.getNome());
         alunoExistente.setCpf(aluno.getCpf());
         alunoExistente.setEmail(aluno.getEmail());
         alunoExistente.setMatricula(aluno.getMatricula());
+        alunoExistente.setCurso(curso);
 
         return alunoRepository.save(alunoExistente);
     }
 
 
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         // Localizando o aluno
-        Aluno alunoExistente = alunoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado!"));
-
-        alunoRepository.deleteById(id);
+        Aluno aluno = findById(id);
+        alunoRepository.delete(aluno);
     }
 }
 

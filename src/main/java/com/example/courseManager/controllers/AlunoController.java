@@ -7,6 +7,7 @@ import com.example.courseManager.models.Aluno;
 import com.example.courseManager.models.Curso;
 import com.example.courseManager.repositories.CursoRepository;
 import com.example.courseManager.service.AlunoService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,17 +34,13 @@ public class AlunoController {
     @PostMapping("/save")
     public ResponseEntity<AlunoResponseDTO> create(@Valid @RequestBody AlunoRequestDTO dto) {
 
-        // Busca o curso referente
-        Curso curso = cursoRepository.findById(dto.getCursoId())
-                .orElseThrow(() -> new RuntimeException("Curso não encontrado!"));
-
         // Convertendo de dto para entidade
         Aluno aluno = alunoMapper.toEntity(dto);
 
         // Associa o aluno ao curso encontrado
-        aluno.setCurso(curso);
+        //aluno.setCurso(curso);
 
-        Aluno alunoCriado = alunoService.save(aluno);
+        Aluno alunoCriado = alunoService.save(aluno, dto.getCursoId());
 
         // Convertendo a entidade persistida em DTO de resposta
         AlunoResponseDTO response = alunoMapper.toDto(alunoCriado);
@@ -51,18 +48,16 @@ public class AlunoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<AlunoResponseDTO> findAlunoById(@PathVariable Long id) {
 
-        Optional<Aluno> aluno = alunoService.findById(id);
+        Aluno aluno = alunoService.findById(id);
 
-        if (aluno.isPresent()) {
-            AlunoResponseDTO alunoDto = alunoMapper.toDto(aluno.get());
-            return ResponseEntity.status(HttpStatus.OK).body(alunoDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        AlunoResponseDTO response = alunoMapper.toDto(aluno);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
 
     @GetMapping
     public ResponseEntity<List<AlunoResponseDTO>> findAll() {
@@ -75,16 +70,17 @@ public class AlunoController {
             AlunoResponseDTO alunoDto = alunoMapper.toDto(aluno);
             alunosDto.add(alunoDto);
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(alunosDto);
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<AlunoResponseDTO> updateAluno(@PathVariable Long id, @Valid @RequestBody AlunoRequestDTO dto) { // @PathVariable para localizar o aluno + @RequestBody para alterar o body
 
         Aluno aluno = alunoMapper.toEntity(dto);
 
-        Aluno alunoAtualizado = alunoService.update(id, aluno);
+        Aluno alunoAtualizado = alunoService.update(id, aluno, dto.getCursoId());
 
         AlunoResponseDTO response = alunoMapper.toDto(alunoAtualizado);
 
@@ -93,7 +89,7 @@ public class AlunoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAluno(@PathVariable Long id) {
-        alunoService.deleteById(id);
+        alunoService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
