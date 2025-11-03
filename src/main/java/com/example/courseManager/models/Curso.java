@@ -26,6 +26,13 @@ public class Curso {
         this.cargaHoraria = cargaHoraria;
     }
 
+    // Construtor personalizado para testes unitários
+    public Curso(String nome, String descricao, Integer cargaHoraria) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.cargaHoraria = cargaHoraria;
+    }
+
     public Curso() {
     }
 

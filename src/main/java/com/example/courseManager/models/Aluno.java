@@ -26,6 +26,16 @@ public class Aluno {
         this.curso = curso;
     }
 
+    // Construtor personalizado para testes unitários
+    public Aluno(Long id, String nome, String cpf, String email, String matricula) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.matricula = matricula;
+    }
+
+
     public Aluno() {
     }
 
