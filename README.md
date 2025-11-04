@@ -11,11 +11,13 @@ API desenvolvida em **Java + Spring Boot** com o objetivo de gerenciar **cursos 
 
 ## 🚀 Tecnologias Utilizadas
 
-- ☕ **Java 21**
-- 🌱 **Spring Boot** (Web, Data JPA, Validation)
-- 🧠 **H2 Database** (banco em memória para testes)
-- 📦 **Gradle:** Gerenciador de dependências e build automation (automatiza compilação, execução e gerenciamento de dependências do projeto)
-- 🔧 **Postman / Insomnia** – Testes das requisições
+- **Java 21**
+- **Spring Boot** (Web, Data JPA, Validation)
+- **H2 Database** (banco em memória para testes)
+- **Gradle:** Gerenciador de dependências e build automation (automatiza compilação, execução e gerenciamento de dependências do projeto)
+- **Postman / Insomnia** – Testes das requisições
+- **JUnit 5** - Testes unitários e de integração
+- **Spring MockMvc** - Testes de endpoints REST de forma isolada
 
 ---
 
@@ -47,11 +49,37 @@ API desenvolvida em **Java + Spring Boot** com o objetivo de gerenciar **cursos 
                     - coursemanager
                         - controllers
                         - dtos
+                        - exceptions
                         - mappers
                         - models
                         - repositories
                         - service
                         - CourseManagerApplication.java
+    - test
+        - java
+            - com
+                - example
+                    - coursemanager
+                        - controllers
+                            - AlunoControllerTest.java
+                            - CursoControllerTest.java
+                        - service
+                            - AlunoServiceTest.java
+                            - CursoServiceTest.java
+
+---
+
+## ⚡ Diferenciais da aplicação
+- ✅ **Validações robustas com Bean Validation**  
+  Uso de anotações como `@NotBlank`, `@NotNull`, `@Email`, `@Size`, entre outras, garantindo a integridade dos dados de entrada.
+
+
+- ⚙️ **Tratamento de exceções personalizado**  
+    Implementação de `@ControllerAdvice` e `@ExceptionHandler`, com classes específicas (`EntityNotFoundException`, `ErrorResponse`, `GlobalExceptionHandler`) garantindo respostas padronizadas e mensagens de erro mais claras.”
+
+
+- 🧪 **Testes unitários e de integração**  
+  Cobertura de testes unitários e de integração nos layers de Controller e Service, utilizando **JUnit 5**, **Mockito** e **MockMv**c, assegurando o correto funcionamento e integração entre os componentes.
 
 ---
 
@@ -76,10 +104,8 @@ API desenvolvida em **Java + Spring Boot** com o objetivo de gerenciar **cursos 
 
 ## ⏳ Implementações futuras
 
-- ✅ **Validações** com Bean Validation (`@NotNull`, `@Email`, `@CPF` etc.)
-- ⚙️ **Tratamento de exceções** personalizado (ControllerAdvice + ExceptionHandler)
 - 📜 **Documentação Swagger/OpenAPI**
-- 🧪 **Testes unitários e de integração**
+
 
 ---
 
