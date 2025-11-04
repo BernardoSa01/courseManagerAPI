@@ -75,7 +75,7 @@ API RESTful desenvolvida em **Java + Spring Boot** com o objetivo de gerenciar *
 
 
 - ⚙️ **Tratamento de exceções personalizado**  
-    Implementação de `@ControllerAdvice` e `@ExceptionHandler`, com classes específicas (`EntityNotFoundException`, `ErrorResponse`, `GlobalExceptionHandler`) garantindo respostas padronizadas e mensagens de erro mais claras.”
+    Implementação de `@ControllerAdvice` e `@ExceptionHandler`, com classes específicas (`EntityNotFoundException`, `ErrorResponse`, `GlobalExceptionHandler`) garantindo respostas padronizadas e mensagens de erro mais claras.
 
 
 - 🧪 **Testes unitários e de integração**  
