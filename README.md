@@ -2,7 +2,7 @@
 
 # 🎓 Course Manager API
 
-API desenvolvida em **Java + Spring Boot** com o objetivo de gerenciar **cursos e alunos**, incluindo o relacionamento entre eles (um curso pode ter vários alunos, e cada aluno pertence a um curso).
+API RESTful desenvolvida em **Java + Spring Boot** com o objetivo de gerenciar **cursos e alunos**, incluindo o relacionamento entre eles (um curso pode ter vários alunos, e cada aluno pertence a um curso).
 
 </div>
 
