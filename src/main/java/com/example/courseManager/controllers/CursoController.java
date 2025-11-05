@@ -37,17 +37,6 @@ public class CursoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /*@GetMapping("/{id}")
-    public ResponseEntity<CursoResponseDTO> findCursoById(@PathVariable Long id) {
-        Optional<Curso> curso = cursoService.findById(id);
-
-        if (curso.isPresent()) {
-            CursoResponseDTO cursoDto = cursoMapper.toDto(curso.get());
-            return ResponseEntity.status(HttpStatus.OK).body(cursoDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<CursoResponseDTO> findCursoById(@PathVariable Long id) {
